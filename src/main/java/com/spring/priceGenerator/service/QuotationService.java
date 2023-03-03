@@ -44,7 +44,7 @@ public class QuotationService {
     public Quotation generateQuotation(Long productId) {
         Product foundProduct = productRepository.findProductById(productId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "product not found"));
         User foundUser = userService.findLoggedInUser();
-        Integer foundUserAge = Period.between(foundUser.getDateOfBirth(), LocalDate.now()).getYears();
+        Double foundUserAge = Double.valueOf(Period.between(foundUser.getDateOfBirth(), LocalDate.now()).getYears());
         Quotation quotation = new Quotation();
         if (foundUserAge >= foundProduct.getProductAgeDiscountThreshold()) {
             quotation.setAgeDiscount(foundProduct.getProductPrice() * 0.2);
@@ -57,6 +57,7 @@ public class QuotationService {
         quotation.setProduct(foundProduct);
         quotation.setUser(foundUser);
         quotation.setExpireDate(LocalDateTime.now().plusMinutes(5));
+        quotation.setAgeDiscount(foundUserAge);
         return quotationRepository.save(quotation);
     }
 

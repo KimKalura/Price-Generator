@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -18,7 +19,7 @@ public class Order {
     private Long id;
 
     @Column
-    private Date createdDate;
+    private LocalDateTime createdDate;
 
     @ManyToOne
     @JsonBackReference(value = "user-order")
@@ -29,9 +30,12 @@ public class Order {
     @JsonManagedReference(value = "order-quotation")
     private List<Quotation> quotationList;
 
+    @Column
+    Double totalPrice;
+
     public Order(){}
 
-    public Order(Long id, Date createdDate, User user, List<Quotation> quotationList) {
+    public Order(Long id, LocalDateTime createdDate, User user, List<Quotation> quotationList) {
         this.id = id;
         this.createdDate = createdDate;
         this.user = user;
@@ -42,11 +46,11 @@ public class Order {
         return id;
     }
 
-    public Date getCreatedDate() {
+    public LocalDateTime getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(Date createdDate) {
+    public void setCreatedDate(LocalDateTime createdDate) {
         this.createdDate = createdDate;
     }
 
@@ -68,4 +72,14 @@ public class Order {
     public void setQuotationList(List<Quotation> quotationList) {
         this.quotationList = quotationList;
     }
+
+    public Double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(Double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+
 }
