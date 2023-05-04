@@ -14,12 +14,16 @@ public class RegisterDTO {
     @Email(message = "Email provided is not valid")
     private String email;
 
+    @NotBlank(message = "Country is mandatory")
+    private String country;
+
     private String role;
 
-    public RegisterDTO(String username, String password, String email, String role) {
+    public RegisterDTO(String username, String password, String email, String country, String role) {
         this.username = username;
         this.password = password;
         this.email = email;
+        this.country = country;
         this.role = role;
     }
 
@@ -53,5 +57,13 @@ public class RegisterDTO {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
     }
 }
